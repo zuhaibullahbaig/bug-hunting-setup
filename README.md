@@ -24,15 +24,15 @@ chmod +x install-go.sh
 ### 2️⃣ `setup-recon-tools.sh` - Install Reconnaissance Tools  
 📌 This script **installs essential recon tools** for discovering subdomains, gathering intelligence, and mapping out targets.  
 🧕‍♂️ **Tools Installed:**  
-- **Amass** - Subdomain enumeration & OSINT.  
-- **Subfinder** - Passive subdomain discovery.  
-- **Findomain** - Fast subdomain enumeration.  
-- **Waybackurls** - Fetch historical URLs from the Wayback Machine.  
-- **Assetfinder** - Discover related assets of a domain.  
-- **Gau (GetAllURLs)** - Fetch URLs from various sources.  
-- **Httpx** - Probe HTTP servers for status codes, technologies, and headers.  
-- **Nuclei** - Probe HTTP servers for status codes, technologies, and headers.  
-- **Dnsx** - Probe HTTP servers for status codes, technologies, and headers.  
+- 🔎 **Amass** - Subdomain enumeration & OSINT.  
+- 🌍 **Subfinder** - Passive subdomain discovery.  
+- 🏴‍☠️ **Findomain** - Fast subdomain enumeration.  
+- 💜 **Waybackurls** - Fetch historical URLs from the Wayback Machine.  
+- 📱 **Assetfinder** - Discover related assets of a domain.  
+- 🌐 **Gau (GetAllURLs)** - Fetch URLs from various sources.  
+- 🔄 **Httpx** - Probe HTTP servers for status codes, technologies, and headers.  
+- ⚡ **Nuclei** - Fast vulnerability scanning based on templates.
+- 🌍 **Dnsx** - Fast DNS resolver and probe tool.
 
 **& More** 
 
