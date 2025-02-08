@@ -55,7 +55,7 @@ install_tool "gau" "go install -v github.com/lc/gau/v2/cmd/gau@latest"
 install_tool "katana" "go install -v github.com/projectdiscovery/katana/cmd/katana@latest"
 install_tool "gf" "go install -v github.com/tomnomnom/gf@latest"
 install_tool "gobuster" "go install github.com/OJ/gobuster/v3@latest"
-
+install_tool "nmap" "sudo apt install -y nmap"
 # Installing additional tools
 install_tool "findomain" "wget https://github.com/Findomain/Findomain/releases/latest/download/findomain-linux && chmod +x findomain-linux && sudo mv findomain-linux /usr/local/bin/findomain"
 install_tool "ffuf" "go install -v github.com/ffuf/ffuf@latest"
@@ -77,7 +77,7 @@ echo -e "${GREEN}Nuclei templates updated.${NC}"
 # Verify installation of key tools
 echo
 echo -e "${BLUE}Verifying installations...${NC}"
-for tool in amass subfinder assetfinder httpx nuclei dnsx waybackurls gau katana gf gobuster findomain ffuf hakrawler masscan; do
+for tool in amass subfinder assetfinder httpx nuclei dnsx waybackurls gau katana gf gobuster nmap findomain ffuf hakrawler masscan; do
     if command -v $tool &> /dev/null; then
         echo -e "${GREEN}$tool is installed.${NC}"
     else

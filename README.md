@@ -44,6 +44,17 @@ chmod +x setup-recon-tools.sh
 
 ---
 
+### 3️⃣ `setup-wordlists.sh` - Download Seclists   
+
+📌 This script **downloads wordlists** for fuzzing hidden directories and subdomain enumeration.  
+
+🔹 **Run it:**  
+```bash
+chmod +x setup-worldlists.sh
+./setup-wordlists.sh
+```
+---
+
 ## 🚀 **How to Use These Scripts?**  
 
 1️⃣ **Clone this repo** 👅  
@@ -54,21 +65,15 @@ cd bug-hunting-setup
 
 2️⃣ **Give execute permissions** 🔑  
 ```bash
-chmod +x install-go.sh setup-recon-tools.sh
+chmod +x install-go.sh setup-recon-tools.sh setup-wordlists.sh
 ```
 
 3️⃣ **Run the scripts** 🏃  
 ```bash
 ./install-go.sh    # Install Go  
 ./setup-recon-tools.sh   # Install recon tools  
+./setup-wordlists.sh # Download wordlists
 ```
-
----
-
-## 🏠 **Upcoming Scripts (To Be Added Soon...)**  
-✅ `setup-exploitation-tools.sh` - Install exploitation tools like Metasploit, Burp Suite, etc.  
-✅ `update-tools.sh` - Update all installed recon tools.  
-✅ `install-all-tools.sh` - Install both recon and exploitation tools at once.  
 
 ---
 
