@@ -112,6 +112,21 @@ case $choice in
         download_wordlist "https://crackstation.net/files/crackstation.txt.gz" "crackstation.txt.gz"
         gunzip -f "$WORDLIST_DIR/crackstation.txt.gz"
         download_wordlist "https://wordlists.assetnote.io/data/manual/2m-subdomains.txt" "2m-subdomains.txt"
+
+        echo -e "${BLUE}Downloading All Major Filename Wordlists...${NC}"
+        echo -e "${GREEN}Downloading Manually Generated HTML Files name list ${NC}"
+        download_wordlist "https://wordlists-cdn.assetnote.io/data/manual/html.txt" "html-filenames.txt"
+        echo -e "${GREEN}Downloading Manually Generated JSP Files name list ${NC}"
+        download_wordlist "https://wordlists-cdn.assetnote.io/data/manual/jsp.txt" "jsp-filenames.txt"
+        echo -e "${GREEN}Downloading Manually Generated XML Files name list ${NC}"
+        download_wordlist "https://wordlists-cdn.assetnote.io/data/manual/xml_filenames.txt" "xmls-filenames.txt"
+        echo -e "${GREEN}Downloading Manually Generated ASP Files name list ${NC}"
+        download_wordlist "https://wordlists-cdn.assetnote.io/data/manual/asp_lowercase.txt" "asp-filenames.txt"
+        echo -e "${GREEN}Downloading Manually Generated PHP Files name list ${NC}"
+        download_wordlist "https://wordlists-cdn.assetnote.io/data/manual/php.txt" "php-filenames.txt"
+        echo -e "${GREEN}Downloading Manually Generated ASPX Files name list ${NC}"
+        download_wordlist "https://wordlists-cdn.assetnote.io/data/manual/aspx_lowercase.txt" "aspx-filenames.txt"
+        ;;
         ;;
     *)
         echo -e "${RED}Invalid choice! Exiting...${NC}"
