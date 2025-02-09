@@ -68,8 +68,9 @@ echo -e "1. SecLists (Comprehensive collection)"
 echo -e "2. FuzzDB (Fuzzing payloads & bypasses)"
 echo -e "3. CrackStation (Massive password database)"
 echo -e "4. Assetnote 2M Subdomains"
-echo -e "5. All of the above (FULL SETUP)"
-read -p "Enter your choice (1-7): " choice
+echo -e "5. Assetnote Major Filename Wordlists (asp, aspx, html, jsp, xml, php)"
+echo -e "9. All of the above (FULL SETUP)"
+read -p "Enter your choice (1-9): " choice
 
 case $choice in
     1)
@@ -87,9 +88,24 @@ case $choice in
         ;;
     4)
         echo -e "${BLUE}Downloading Assetnote 2M Subdomains...${NC}"
-        download_wordlist "https://wordlists-cdn.assetnote.io/data/automated/httparchive_subdomains_2024_05_28.txt" "2m-subdomains.txt"
+        download_wordlist "https://wordlists-cdn.assetnote.io/data/manual/2m-subdomains.txt" "2m-subdomains.txt"
         ;;
     5)
+        echo -e "${BLUE}Downloading All Major Filename Wordlists...${NC}"
+        echo -e "${GREEN}Downloading Manually Generated HTML Files name list ${NC}"
+        download_wordlist "https://wordlists-cdn.assetnote.io/data/manual/html.txt" "html-filenames.txt"
+        echo -e "${GREEN}Downloading Manually Generated JSP Files name list ${NC}"
+        download_wordlist "https://wordlists-cdn.assetnote.io/data/manual/jsp.txt" "jsp-filenames.txt"
+        echo -e "${GREEN}Downloading Manually Generated XML Files name list ${NC}"
+        download_wordlist "https://wordlists-cdn.assetnote.io/data/manual/xml_filenames.txt" "xmls-filenames.txt"
+        echo -e "${GREEN}Downloading Manually Generated ASP Files name list ${NC}"
+        download_wordlist "https://wordlists-cdn.assetnote.io/data/manual/asp_lowercase.txt" "asp-filenames.txt"
+        echo -e "${GREEN}Downloading Manually Generated PHP Files name list ${NC}"
+        download_wordlist "https://wordlists-cdn.assetnote.io/data/manual/php.txt" "php-filenames.txt"
+        echo -e "${GREEN}Downloading Manually Generated ASPX Files name list ${NC}"
+        download_wordlist "https://wordlists-cdn.assetnote.io/data/manual/aspx_lowercase.txt" "aspx-filenames.txt"
+        ;;
+    9)
         echo -e "${BLUE}Installing EVERYTHING...${NC}"
         git clone https://github.com/danielmiessler/SecLists.git "$WORDLIST_DIR/SecLists"
         git clone https://github.com/fuzzdb-project/fuzzdb.git "$WORDLIST_DIR/fuzzdb"
