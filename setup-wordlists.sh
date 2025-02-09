@@ -66,11 +66,9 @@ fi
 echo -e "${YELLOW}Select which wordlists to install:${NC}"
 echo -e "1. SecLists (Comprehensive collection)"
 echo -e "2. FuzzDB (Fuzzing payloads & bypasses)"
-echo -e "3. RockYou (Huge password list)"
-echo -e "4. Jhaddix’s All.txt (Subdomains)"
-echo -e "5. CrackStation (Massive password database)"
-echo -e "6. Assetnote 2M Subdomains"
-echo -e "7. All of the above (FULL SETUP)"
+echo -e "3. CrackStation (Massive password database)"
+echo -e "4. Assetnote 2M Subdomains"
+echo -e "5. All of the above (FULL SETUP)"
 read -p "Enter your choice (1-7): " choice
 
 case $choice in
@@ -83,28 +81,18 @@ case $choice in
         git clone https://github.com/fuzzdb-project/fuzzdb.git "$WORDLIST_DIR/fuzzdb"
         ;;
     3)
-        echo -e "${BLUE}Downloading RockYou...${NC}"
-        download_wordlist "https://github.com/danielmiessler/SecLists/raw/master/Passwords/Leaked-Databases/rockyou.txt" "rockyou.txt"
-        ;;
-    4)
-        echo -e "${BLUE}Downloading Jhaddix’s All.txt...${NC}"
-        download_wordlist "https://gist.githubusercontent.com/jhaddix/86a06c44c016fb0c06c6/raw/22a47bc6de50b43f61ae8a89f69d7f47f39df3b9/all.txt" "subdomains.txt"
-        ;;
-    5)
         echo -e "${BLUE}Downloading CrackStation wordlist...${NC}"
         download_wordlist "https://crackstation.net/files/crackstation.txt.gz" "crackstation.txt.gz"
         gunzip -f "$WORDLIST_DIR/crackstation.txt.gz"
         ;;
-    6)
+    4)
         echo -e "${BLUE}Downloading Assetnote 2M Subdomains...${NC}"
-        download_wordlist "https://wordlists.assetnote.io/data/manual/2m-subdomains.txt" "2m-subdomains.txt"
+        download_wordlist "https://wordlists-cdn.assetnote.io/data/automated/httparchive_subdomains_2024_05_28.txt" "2m-subdomains.txt"
         ;;
-    7)
+    5)
         echo -e "${BLUE}Installing EVERYTHING...${NC}"
         git clone https://github.com/danielmiessler/SecLists.git "$WORDLIST_DIR/SecLists"
         git clone https://github.com/fuzzdb-project/fuzzdb.git "$WORDLIST_DIR/fuzzdb"
-        download_wordlist "https://github.com/danielmiessler/SecLists/raw/master/Passwords/Leaked-Databases/rockyou.txt" "rockyou.txt"
-        download_wordlist "https://gist.githubusercontent.com/jhaddix/86a06c44c016fb0c06c6/raw/22a47bc6de50b43f61ae8a89f69d7f47f39df3b9/all.txt" "subdomains.txt"
         download_wordlist "https://crackstation.net/files/crackstation.txt.gz" "crackstation.txt.gz"
         gunzip -f "$WORDLIST_DIR/crackstation.txt.gz"
         download_wordlist "https://wordlists.assetnote.io/data/manual/2m-subdomains.txt" "2m-subdomains.txt"
