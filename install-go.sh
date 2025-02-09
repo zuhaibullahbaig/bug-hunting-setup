@@ -15,6 +15,10 @@ echo -e "${BLUE}        Go Environment Setup Script          ${NC}"
 echo -e "${BLUE}----------------------------------------------${NC}"
 echo
 
+# Load environment variables
+echo -e "${BLUE}Loading environment variables...${NC}"
+source ~/.bashrc
+
 # Function to remove existing Go installation
 remove_go() {
     echo
@@ -50,6 +54,9 @@ configure_go() {
         echo 'export GO111MODULE=on' >> ~/.bashrc
     fi
 
+    # Apply environment variables immediately
+    source ~/.bashrc
+
     # Create Go workspace directories
     mkdir -p "$GOPATH/bin" "$GOPATH/src" "$GOPATH/pkg"
 
@@ -58,7 +65,7 @@ configure_go() {
     echo
 }
 
-# Check if Go is installed
+# Check if Go is installed (AFTER sourcing ~/.bashrc)
 if command -v go &> /dev/null; then
     echo -e "${YELLOW}Go is already installed.${NC}"
     read -p "Do you want to remove and reinstall it? (yes/no): " choice
