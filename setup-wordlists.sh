@@ -52,6 +52,17 @@ download_wordlist() {
     echo -e "${GREEN}Saved: $filepath${NC}"
 }
 
+# Check if wget and git are installed
+if ! command -v wget &> /dev/null; then
+    echo -e "${RED}wget is not installed. Installing wget...${NC}"
+    sudo apt install -y wget
+fi
+
+if ! command -v git &> /dev/null; then
+    echo -e "${RED}git is not installed. Installing git...${NC}"
+    sudo apt install -y git
+fi
+
 # Selection Menu
 echo -e "${YELLOW}Select which wordlists to install:${NC}"
 echo -e "1. SecLists (Comprehensive collection)"
@@ -73,14 +84,22 @@ case $choice in
     3)
         echo -e "${BLUE}Downloading RockYou...${NC}"
         sudo apt install -y wordlists
-        sudo gunzip -k /usr/share/wordlists/rockyou.txt.gz
-        sudo cp /usr/share/wordlists/rockyou.txt "$WORDLIST_DIR/rockyou.txt"
+        if [[ -f "/usr/share/wordlists/rockyou.txt.gz" ]]; then
+            sudo gunzip -k /usr/share/wordlists/rockyou.txt.gz
+            sudo cp /usr/share/wordlists/rockyou.txt "$WORDLIST_DIR/rockyou.txt"
+        else
+            echo -e "${RED}rockyou.txt.gz not found!${NC}"
+        fi
         ;;
     4)
         echo -e "${BLUE}Installing EVERYTHING...${NC}"
         sudo apt install -y seclists wordlists
-        sudo gunzip -k /usr/share/wordlists/rockyou.txt.gz
-        sudo cp /usr/share/wordlists/rockyou.txt "$WORDLIST_DIR/rockyou.txt"
+        if [[ -f "/usr/share/wordlists/rockyou.txt.gz" ]]; then
+            sudo gunzip -k /usr/share/wordlists/rockyou.txt.gz
+            sudo cp /usr/share/wordlists/rockyou.txt "$WORDLIST_DIR/rockyou.txt"
+        else
+            echo -e "${RED}rockyou.txt.gz not found!${NC}"
+        fi
         git clone https://github.com/fuzzdb-project/fuzzdb.git "$WORDLIST_DIR/fuzzdb"
         ;;
     5)
@@ -98,8 +117,12 @@ case $choice in
         read -p "Do you want RockYou? (yes/no): " rockyou_choice
         if [[ "$rockyou_choice" =~ ^[Yy]$ ]]; then
             sudo apt install -y wordlists
-            sudo gunzip -k /usr/share/wordlists/rockyou.txt.gz
-            sudo cp /usr/share/wordlists/rockyou.txt "$WORDLIST_DIR/rockyou.txt"
+            if [[ -f "/usr/share/wordlists/rockyou.txt.gz" ]]; then
+                sudo gunzip -k /usr/share/wordlists/rockyou.txt.gz
+                sudo cp /usr/share/wordlists/rockyou.txt "$WORDLIST_DIR/rockyou.txt"
+            else
+                echo -e "${RED}rockyou.txt.gz not found!${NC}"
+            fi
         fi
         ;;
     *)
@@ -112,6 +135,9 @@ esac
 if [[ ! -L "$HOME/wordlists" ]]; then
     echo -e "${BLUE}Creating a symbolic link at ~/wordlists for easy access...${NC}"
     ln -s "$WORDLIST_DIR" "$HOME/wordlists"
+elif [[ "$(readlink -f "$HOME/wordlists")" != "$(readlink -f "$WORDLIST_DIR")" ]]; then
+    echo -e "${YELLOW}Symbolic link ~/wordlists already exists but points to a different directory.${NC}"
+    echo -e "${YELLOW}You might want to remove it and create a new one.${NC}"
 fi
 
 echo -e "${GREEN}Wordlist setup complete!${NC}"
