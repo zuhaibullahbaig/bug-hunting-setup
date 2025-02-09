@@ -103,6 +103,7 @@ fi
 
 # Verify installation if Go was installed
 if [[ "$install_go" == true ]]; then
+    source ~/.bashrc
     echo
     echo -e "${BLUE}Verifying Go installation...${NC}"
     if go version; then
