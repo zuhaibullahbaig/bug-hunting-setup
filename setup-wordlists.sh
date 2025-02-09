@@ -47,19 +47,19 @@ download_wordlist() {
     fi
 
     echo -e "${BLUE}Downloading: $filename${NC}"
-    sudo wget -q --show-progress -O "$filepath" "$url"
+    wget -q --show-progress -O "$filepath" "$url"
     echo -e "${GREEN}Saved: $filepath${NC}"
 }
 
 # Check if wget and git are installed
 if ! command -v wget &> /dev/null; then
-    echo -e "${RED}wget is not installed. Installing wget...${NC}"
-    sudo apt install -y wget
+    echo -e "${RED}wget is not installed. Please install it manually.${NC}"
+    exit 1
 fi
 
 if ! command -v git &> /dev/null; then
-    echo -e "${RED}git is not installed. Installing git...${NC}"
-    sudo apt install -y git
+    echo -e "${RED}git is not installed. Please install it manually.${NC}"
+    exit 1
 fi
 
 # Selection Menu
@@ -67,14 +67,16 @@ echo -e "${YELLOW}Select which wordlists to install:${NC}"
 echo -e "1. SecLists (Comprehensive collection)"
 echo -e "2. FuzzDB (Fuzzing payloads & bypasses)"
 echo -e "3. RockYou (Huge password list)"
-echo -e "4. All of the above (FULL SETUP)"
-echo -e "5. Custom Selection"
-read -p "Enter your choice (1-5): " choice
+echo -e "4. Jhaddix’s All.txt (Subdomains)"
+echo -e "5. CrackStation (Massive password database)"
+echo -e "6. Assetnote 2M Subdomains"
+echo -e "7. All of the above (FULL SETUP)"
+read -p "Enter your choice (1-7): " choice
 
 case $choice in
     1)
         echo -e "${BLUE}Installing SecLists...${NC}"
-        sudo apt install -y seclists
+        git clone https://github.com/danielmiessler/SecLists.git "$WORDLIST_DIR/SecLists"
         ;;
     2)
         echo -e "${BLUE}Installing FuzzDB...${NC}"
@@ -82,47 +84,30 @@ case $choice in
         ;;
     3)
         echo -e "${BLUE}Downloading RockYou...${NC}"
-        sudo apt install -y wordlists
-        if [[ -f "/usr/share/wordlists/rockyou.txt.gz" ]]; then
-            sudo gunzip -k /usr/share/wordlists/rockyou.txt.gz
-            sudo cp /usr/share/wordlists/rockyou.txt "$WORDLIST_DIR/rockyou.txt"
-        else
-            echo -e "${RED}rockyou.txt.gz not found!${NC}"
-        fi
+        download_wordlist "https://github.com/danielmiessler/SecLists/raw/master/Passwords/Leaked-Databases/rockyou.txt" "rockyou.txt"
         ;;
     4)
-        echo -e "${BLUE}Installing EVERYTHING...${NC}"
-        sudo apt install -y seclists wordlists
-        if [[ -f "/usr/share/wordlists/rockyou.txt.gz" ]]; then
-            sudo gunzip -k /usr/share/wordlists/rockyou.txt.gz
-            sudo cp /usr/share/wordlists/rockyou.txt "$WORDLIST_DIR/rockyou.txt"
-        else
-            echo -e "${RED}rockyou.txt.gz not found!${NC}"
-        fi
-        git clone https://github.com/fuzzdb-project/fuzzdb.git "$WORDLIST_DIR/fuzzdb"
+        echo -e "${BLUE}Downloading Jhaddix’s All.txt...${NC}"
+        download_wordlist "https://gist.githubusercontent.com/jhaddix/86a06c44c016fb0c06c6/raw/22a47bc6de50b43f61ae8a89f69d7f47f39df3b9/all.txt" "subdomains.txt"
         ;;
     5)
-        echo -e "${BLUE}Custom selection! Let's go!${NC}"
-        read -p "Do you want SecLists? (yes/no): " seclists_choice
-        if [[ "$seclists_choice" =~ ^[Yy]$ ]]; then
-            sudo apt install -y seclists
-        fi
-
-        read -p "Do you want FuzzDB? (yes/no): " fuzzdb_choice
-        if [[ "$fuzzdb_choice" =~ ^[Yy]$ ]]; then
-            git clone https://github.com/fuzzdb-project/fuzzdb.git "$WORDLIST_DIR/fuzzdb"
-        fi
-
-        read -p "Do you want RockYou? (yes/no): " rockyou_choice
-        if [[ "$rockyou_choice" =~ ^[Yy]$ ]]; then
-            sudo apt install -y wordlists
-            if [[ -f "/usr/share/wordlists/rockyou.txt.gz" ]]; then
-                sudo gunzip -k /usr/share/wordlists/rockyou.txt.gz
-                sudo cp /usr/share/wordlists/rockyou.txt "$WORDLIST_DIR/rockyou.txt"
-            else
-                echo -e "${RED}rockyou.txt.gz not found!${NC}"
-            fi
-        fi
+        echo -e "${BLUE}Downloading CrackStation wordlist...${NC}"
+        download_wordlist "https://crackstation.net/files/crackstation.txt.gz" "crackstation.txt.gz"
+        gunzip -f "$WORDLIST_DIR/crackstation.txt.gz"
+        ;;
+    6)
+        echo -e "${BLUE}Downloading Assetnote 2M Subdomains...${NC}"
+        download_wordlist "https://wordlists.assetnote.io/data/manual/2m-subdomains.txt" "2m-subdomains.txt"
+        ;;
+    7)
+        echo -e "${BLUE}Installing EVERYTHING...${NC}"
+        git clone https://github.com/danielmiessler/SecLists.git "$WORDLIST_DIR/SecLists"
+        git clone https://github.com/fuzzdb-project/fuzzdb.git "$WORDLIST_DIR/fuzzdb"
+        download_wordlist "https://github.com/danielmiessler/SecLists/raw/master/Passwords/Leaked-Databases/rockyou.txt" "rockyou.txt"
+        download_wordlist "https://gist.githubusercontent.com/jhaddix/86a06c44c016fb0c06c6/raw/22a47bc6de50b43f61ae8a89f69d7f47f39df3b9/all.txt" "subdomains.txt"
+        download_wordlist "https://crackstation.net/files/crackstation.txt.gz" "crackstation.txt.gz"
+        gunzip -f "$WORDLIST_DIR/crackstation.txt.gz"
+        download_wordlist "https://wordlists.assetnote.io/data/manual/2m-subdomains.txt" "2m-subdomains.txt"
         ;;
     *)
         echo -e "${RED}Invalid choice! Exiting...${NC}"
