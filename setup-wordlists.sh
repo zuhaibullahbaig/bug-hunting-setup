@@ -127,7 +127,6 @@ case $choice in
         echo -e "${GREEN}Downloading Manually Generated ASPX Files name list ${NC}"
         download_wordlist "https://wordlists-cdn.assetnote.io/data/manual/aspx_lowercase.txt" "aspx-filenames.txt"
         ;;
-        ;;
     *)
         echo -e "${RED}Invalid choice! Exiting...${NC}"
         exit 1
