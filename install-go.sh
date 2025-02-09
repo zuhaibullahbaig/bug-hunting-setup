@@ -20,7 +20,11 @@ remove_go() {
     echo
     echo -e "${RED}Removing existing Go installation...${NC}"
     sudo rm -rf /usr/local/go
-    sudo rm -rf $HOME/go
+    read -p "Do you want to remove your Go workspace ($HOME/go)? (yes/no): " confirm
+    if [[ "$confirm" =~ ^[Yy] ]]; then
+        rm -rf $HOME/go
+        echo -e "${GREEN}Go workspace removed.${NC}"
+    fi
     sed -i '/export GOPATH=/d' ~/.bashrc
     sed -i '/export PATH=.*go/d' ~/.bashrc
     echo -e "${GREEN}Go has been removed.${NC}"
@@ -32,18 +36,25 @@ configure_go() {
     echo
     echo -e "${BLUE}Configuring Go environment...${NC}"
 
-    # Set environment variables
-    echo 'export GOPATH=$HOME/go' >> ~/.bashrc
-    echo 'export PATH=/usr/local/go/bin:$GOPATH/bin:$PATH' >> ~/.bashrc
-    echo 'export GO111MODULE=on' >> ~/.bashrc
+    # Define GOPATH explicitly before using it
+    GOPATH="$HOME/go"
 
-    # Apply changes
-    source ~/.bashrc
+    # Set environment variables if not already set
+    if ! grep -q "export GOPATH=" ~/.bashrc; then
+        echo 'export GOPATH=$HOME/go' >> ~/.bashrc
+    fi
+    if ! grep -q "export PATH=" ~/.bashrc; then
+        echo 'export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin' >> ~/.bashrc
+    fi
+    if ! grep -q "export GO111MODULE=" ~/.bashrc; then
+        echo 'export GO111MODULE=on' >> ~/.bashrc
+    fi
 
     # Create Go workspace directories
-    mkdir -p $GOPATH/{bin,src,pkg}
+    mkdir -p "$GOPATH/bin" "$GOPATH/src" "$GOPATH/pkg"
 
     echo -e "${GREEN}Go environment configuration is complete.${NC}"
+    echo -e "${YELLOW}Please restart your terminal or run: source ~/.bashrc${NC}"
     echo
 }
 
@@ -59,6 +70,7 @@ if command -v go &> /dev/null; then
         read -p "Do you want to just reconfigure the environment? (yes/no): " reconfig_choice
         if [[ "$reconfig_choice" =~ ^[Yy] ]]; then
             configure_go
+            exit 0
         else
             echo -e "${YELLOW}No changes were made.${NC}"
             exit 0
