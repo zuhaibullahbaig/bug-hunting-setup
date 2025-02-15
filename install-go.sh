@@ -101,19 +101,6 @@ if [[ "$install_go" == true ]]; then
     configure_go
 fi
 
-# Verify installation if Go was installed
-if [[ "$install_go" == true ]]; then
-    source ~/.bashrc
-    echo
-    echo -e "${BLUE}Verifying Go installation...${NC}"
-    if go version; then
-        echo -e "${GREEN}Go installation successful!${NC}"
-    else
-        echo -e "${RED}Go installation failed.${NC}"
-        exit 1
-    fi
-fi
-
 echo
 echo -e "${GREEN}Go setup is complete.${NC}"
 echo -e "${YELLOW}Restart your terminal or run 'source ~/.bashrc' to apply changes.${NC}"
