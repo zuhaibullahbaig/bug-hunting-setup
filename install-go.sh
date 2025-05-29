@@ -41,7 +41,7 @@ configure_go() {
     echo -e "${BLUE}Configuring Go environment...${NC}"
 
     # Define GOPATH explicitly before using it
-    GOPATH="$HOME/go"
+    GOPATH="$HOME/go/bin"
 
     # Set environment variables if not already set
     if ! grep -q "export GOPATH=" ~/.bashrc; then
