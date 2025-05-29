@@ -103,5 +103,4 @@ fi
 
 echo
 echo -e "${GREEN}Go setup is complete.${NC}"
-echo -e "${YELLOW}Restart your terminal or run 'source ~/.bashrc' to apply changes.${NC}"
 echo
