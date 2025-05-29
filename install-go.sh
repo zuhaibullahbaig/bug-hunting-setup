@@ -92,7 +92,7 @@ if [[ "$install_go" == true ]]; then
     echo
     echo -e "${BLUE}Downloading and installing Go...${NC}"
 
-    GO_VERSION="1.22.0"
+    GO_VERSION="1.24.0"
     wget https://go.dev/dl/go$GO_VERSION.linux-amd64.tar.gz
     sudo tar -C /usr/local -xzf go$GO_VERSION.linux-amd64.tar.gz
     rm go$GO_VERSION.linux-amd64.tar.gz
